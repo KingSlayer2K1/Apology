@@ -164,93 +164,129 @@
 
   <!-- SVG Otter -->
   <div id="otter-wrap">
-    <svg id="otter" viewBox="0 0 280 310" xmlns="http://www.w3.org/2000/svg">
+    <g id="body-tilt-group">
+      <svg id="otter" viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
 
-      <!-- Tail -->
-      <ellipse cx="218" cy="272" rx="44" ry="19" fill="#7B4F2E" transform="rotate(-18,218,272)"/>
+        <!-- Tail - more curved and realistic -->
+        <path d="M 220 280 Q 240 260 250 240 Q 260 220 255 200" stroke="#8B5A2B" stroke-width="28" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <ellipse cx="255" cy="198" rx="16" ry="14" fill="#8B5A2B"/>
 
-      <!-- Body -->
-      <ellipse cx="140" cy="260" rx="73" ry="58" fill="#9B6B3A"/>
-      <!-- Belly -->
-      <ellipse cx="140" cy="268" rx="49" ry="40" fill="#C4936A"/>
+        <!-- Back legs -->
+        <ellipse cx="100" cy="295" rx="22" ry="28" fill="#8B5A2B"/>
+        <ellipse cx="100" cy="320" rx="18" ry="12" fill="#6B4423"/>
+        <ellipse cx="190" cy="295" rx="22" ry="28" fill="#8B5A2B"/>
+        <ellipse cx="190" cy="320" rx="18" ry="12" fill="#6B4423"/>
 
-      <!-- Head -->
-      <circle cx="140" cy="148" r="87" fill="#9B6B3A"/>
+        <!-- Body -->
+        <ellipse cx="145" cy="270" rx="78" ry="62" fill="#8B5A2B"/>
+        <!-- Belly -->
+        <ellipse cx="145" cy="275" rx="52" ry="45" fill="#C4A578"/>
 
-      <!-- Left ear -->
-      <circle cx="67" cy="78" r="25" fill="#9B6B3A"/>
-      <circle cx="67" cy="78" r="15" fill="#C4826A"/>
-      <!-- Right ear -->
-      <circle cx="213" cy="78" r="25" fill="#9B6B3A"/>
-      <circle cx="213" cy="78" r="15" fill="#C4826A"/>
+        <!-- Chest/Neck area -->
+        <ellipse cx="145" cy="200" rx="65" ry="55" fill="#8B5A2B"/>
+        <ellipse cx="145" cy="210" rx="48" ry="40" fill="#C4A578"/>
 
-      <!-- Face lighter patch -->
-      <ellipse cx="140" cy="162" rx="64" ry="60" fill="#C4936A"/>
+        <!-- Head group (will rotate) -->
+        <g id="head-group" transform="translate(145, 140)">
+          <!-- Head base -->
+          <circle cx="0" cy="0" r="85" fill="#8B5A2B"/>
+          
+          <!-- Left ear -->
+          <circle cx="-65" cy="-65" r="28" fill="#8B5A2B"/>
+          <circle cx="-65" cy="-65" r="16" fill="#C4A578"/>
+          <ellipse cx="-65" cy="-62" rx="6" ry="8" fill="#6B4423" opacity="0.6"/>
+          
+          <!-- Right ear -->
+          <circle cx="65" cy="-65" r="28" fill="#8B5A2B"/>
+          <circle cx="65" cy="-65" r="16" fill="#C4A578"/>
+          <ellipse cx="65" cy="-62" rx="6" ry="8" fill="#6B4423" opacity="0.6"/>
 
-      <!-- ── LEFT EYE ── -->
-      <circle cx="107" cy="140" r="26" fill="white"/>
-      <circle id="l-iris"  cx="107" cy="140" r="17" fill="#2980b9"/>
-      <circle id="l-pupil" cx="107" cy="140" r="10" fill="#1a1a2e"/>
-      <!-- shines (static) -->
-      <circle cx="115" cy="133" r="4"   fill="white" opacity="0.92"/>
-      <circle cx="101" cy="147" r="2.5" fill="white" opacity="0.72"/>
-      <!-- outline -->
-      <circle cx="107" cy="140" r="26" fill="none" stroke="#5D3A1A" stroke-width="2.2"/>
-      <!-- Happy eye overlay (hidden) — covers top half with face colour, shows squint smile -->
-      <g id="l-happy-eye" visibility="hidden">
-        <circle cx="107" cy="140" r="26" fill="#C4936A"/>
-        <path d="M 82 140 Q 107 122 132 140 Q 107 158 82 140"
-              fill="white" stroke="#5D3A1A" stroke-width="2.2"/>
-        <circle cx="107" cy="148" r="8"  fill="#2980b9"/>
-        <circle cx="107" cy="148" r="5"  fill="#1a1a2e"/>
-        <circle cx="112" cy="145" r="2.5" fill="white" opacity="0.9"/>
-      </g>
+          <!-- Muzzle - defined otter snout -->
+          <ellipse cx="0" cy="18" rx="48" ry="52" fill="#C4A578"/>
+          
+          <!-- Chin definition -->
+          <ellipse cx="0" cy="35" rx="42" ry="30" fill="#B39568"/>
 
-      <!-- ── RIGHT EYE ── -->
-      <circle cx="173" cy="140" r="26" fill="white"/>
-      <circle id="r-iris"  cx="173" cy="140" r="17" fill="#2980b9"/>
-      <circle id="r-pupil" cx="173" cy="140" r="10" fill="#1a1a2e"/>
-      <!-- shines (static) -->
-      <circle cx="181" cy="133" r="4"   fill="white" opacity="0.92"/>
-      <circle cx="167" cy="147" r="2.5" fill="white" opacity="0.72"/>
-      <!-- outline -->
-      <circle cx="173" cy="140" r="26" fill="none" stroke="#5D3A1A" stroke-width="2.2"/>
-      <!-- Happy eye overlay (hidden) -->
-      <g id="r-happy-eye" visibility="hidden">
-        <circle cx="173" cy="140" r="26" fill="#C4936A"/>
-        <path d="M 148 140 Q 173 122 198 140 Q 173 158 148 140"
-              fill="white" stroke="#5D3A1A" stroke-width="2.2"/>
-        <circle cx="173" cy="148" r="8"  fill="#2980b9"/>
-        <circle cx="173" cy="148" r="5"  fill="#1a1a2e"/>
-        <circle cx="178" cy="145" r="2.5" fill="white" opacity="0.9"/>
-      </g>
+          <!-- Whiskers (left) -->
+          <line x1="-30" y1="15" x2="-60" y2="5" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-32" y1="25" x2="-65" y2="20" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="-30" y1="35" x2="-60" y2="40" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
 
-      <!-- Blush cheeks -->
-      <circle cx="80"  cy="170" r="18" fill="#FF8FAB" opacity="0.42"/>
-      <circle cx="200" cy="170" r="18" fill="#FF8FAB" opacity="0.42"/>
+          <!-- Whiskers (right) -->
+          <line x1="30" y1="15" x2="60" y2="5" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="32" y1="25" x2="65" y2="20" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
+          <line x1="30" y1="35" x2="60" y2="40" stroke="#5D3A1A" stroke-width="2" stroke-linecap="round"/>
 
-      <!-- Nose -->
-      <ellipse cx="140" cy="182" rx="9" ry="6.5" fill="#5D3A1A"/>
+          <!-- Blush cheeks -->
+          <circle cx="-45" cy="8" r="20" fill="#FF8FAB" opacity="0.45"/>
+          <circle cx="45" cy="8" r="20" fill="#FF8FAB" opacity="0.45"/>
 
-      <!-- Mouth — sorry / slightly sad -->
-      <path id="mouth"
-            d="M 124 200 Q 140 191 156 200"
-            stroke="#5D3A1A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Nose -->
+          <ellipse cx="0" cy="28" rx="11" ry="8" fill="#5D3A1A"/>
+          <ellipse cx="-3" cy="26" rx="3" ry="2" fill="#2C1810" opacity="0.8"/>
 
-      <!-- Left arm -->
-      <path d="M 82 236 Q 62 260 74 280" stroke="#9B6B3A" stroke-width="16" fill="none" stroke-linecap="round"/>
-      <ellipse cx="72" cy="284" rx="15" ry="12" fill="#9B6B3A"/>
-      <!-- Right arm -->
-      <path d="M 198 236 Q 218 260 206 280" stroke="#9B6B3A" stroke-width="16" fill="none" stroke-linecap="round"/>
-      <ellipse cx="208" cy="284" rx="15" ry="12" fill="#9B6B3A"/>
+          <!-- Mouth — sorry / slightly sad -->
+          <path id="mouth" d="M -18 38 Q 0 28 18 38" stroke="#5D3A1A" stroke-width="3" fill="none" stroke-linecap="round"/>
 
-      <!-- Sign -->
-      <rect x="93" y="292" width="94" height="34" rx="7" fill="#fffde7" stroke="#f9ca24" stroke-width="2.2"/>
-      <text id="sign-txt" x="140" y="314"
-            text-anchor="middle" font-size="11.5" fill="#e17055"
-            font-weight="bold" font-family="Georgia,serif">I'm Sorry! 💕</text>
+          <!-- ── LEFT EYE ── -->
+          <g id="l-eye-group">
+            <circle cx="-28" cy="-12" r="28" fill="white"/>
+            <circle id="l-iris" cx="-28" cy="-12" r="18" fill="#2C5F8D"/>
+            <circle id="l-pupil" cx="-28" cy="-12" r="11" fill="#0F1419"/>
+            <!-- Shine -->
+            <circle cx="-18" cy="-22" r="5" fill="white" opacity="0.94"/>
+            <circle cx="-35" cy="-2" r="3" fill="white" opacity="0.75"/>
+            <!-- Outline -->
+            <circle cx="-28" cy="-12" r="28" fill="none" stroke="#4A3219" stroke-width="2.5"/>
+          </g>
 
-    </svg>
+          <!-- ── RIGHT EYE ── -->
+          <g id="r-eye-group">
+            <circle cx="28" cy="-12" r="28" fill="white"/>
+            <circle id="r-iris" cx="28" cy="-12" r="18" fill="#2C5F8D"/>
+            <circle id="r-pupil" cx="28" cy="-12" r="11" fill="#0F1419"/>
+            <!-- Shine -->
+            <circle cx="38" cy="-22" r="5" fill="white" opacity="0.94"/>
+            <circle cx="21" cy="-2" r="3" fill="white" opacity="0.75"/>
+            <!-- Outline -->
+            <circle cx="28" cy="-12" r="28" fill="none" stroke="#4A3219" stroke-width="2.5"/>
+          </g>
+
+          <!-- Happy eye overlay (hidden) -->
+          <g id="l-happy-eye" visibility="hidden">
+            <circle cx="-28" cy="-12" r="28" fill="#C4A578"/>
+            <path d="M -55 -12 Q -28 -35 -1 -12 Q -28 5 -55 -12" fill="white" stroke="#4A3219" stroke-width="2.5"/>
+            <circle cx="-28" cy="-5" r="9" fill="#2C5F8D"/>
+            <circle cx="-28" cy="-5" r="6" fill="#0F1419"/>
+            <circle cx="-22" cy="-10" r="3" fill="white" opacity="0.92"/>
+          </g>
+          <g id="r-happy-eye" visibility="hidden">
+            <circle cx="28" cy="-12" r="28" fill="#C4A578"/>
+            <path d="M 1 -12 Q 28 -35 55 -12 Q 28 5 1 -12" fill="white" stroke="#4A3219" stroke-width="2.5"/>
+            <circle cx="28" cy="-5" r="9" fill="#2C5F8D"/>
+            <circle cx="28" cy="-5" r="6" fill="#0F1419"/>
+            <circle cx="34" cy="-10" r="3" fill="white" opacity="0.92"/>
+          </g>
+        </g>
+
+        <!-- Front left arm -->
+        <path d="M 85 250 Q 55 270 45 295" stroke="#8B5A2B" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="305" rx="18" ry="16" fill="#8B5A2B"/>
+        <ellipse cx="38" cy="310" rx="14" ry="10" fill="#6B4423"/>
+
+        <!-- Front right arm -->
+        <path d="M 205 250 Q 235 270 245 295" stroke="#8B5A2B" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <ellipse cx="248" cy="305" rx="18" ry="16" fill="#8B5A2B"/>
+        <ellipse cx="252" cy="310" rx="14" ry="10" fill="#6B4423"/>
+
+        <!-- Sign - larger and more visible -->
+        <rect x="80" y="315" width="130" height="50" rx="10" fill="#FFFACD" stroke="#FFD700" stroke-width="3.5"/>
+        <text id="sign-txt" x="145" y="348"
+              text-anchor="middle" font-size="16" font-weight="bold" fill="#e84393"
+              font-family="Georgia,serif">I'm Sorry! 💕</text>
+
+      </svg>
+    </g>
   </div>
 
   <div class="btn-area">
@@ -264,49 +300,82 @@
   </div>
 
   <script>
-    /* ── Eye Tracking ── */
-    const svg     = document.getElementById('otter');
-    const lIris   = document.getElementById('l-iris');
-    const rIris   = document.getElementById('r-iris');
-    const lPupil  = document.getElementById('l-pupil');
-    const rPupil  = document.getElementById('r-pupil');
+    /* ── Eye Tracking & Body Movement ── */
+    const svg            = document.getElementById('otter');
+    const headGroup      = document.getElementById('head-group');
+    const bodyTiltGroup  = document.getElementById('body-tilt-group');
+    const lIris          = document.getElementById('l-iris');
+    const rIris          = document.getElementById('r-iris');
+    const lPupil         = document.getElementById('l-pupil');
+    const rPupil         = document.getElementById('r-pupil');
 
-    // Eye centres in SVG viewBox coordinates
-    const L = { x: 107, y: 140 };
-    const R = { x: 173, y: 140 };
+    // Eye centres in NEW viewBox coordinates
+    const L = { x: -28, y: -12 };  // relative to head-group center
+    const R = { x: 28, y: -12 };
 
-    const MAX_IRIS  = 6;   // max iris travel (px in SVG units)
-    const MAX_PUPIL = 8;   // max pupil travel
+    const MAX_IRIS  = 7;
+    const MAX_PUPIL = 9;
 
     function calcOffset(eyeX, eyeY, mxSVG, mySVG, max) {
       const dx    = mxSVG - eyeX;
       const dy    = mySVG - eyeY;
       const hyp   = Math.hypot(dx, dy);
-      const dist  = Math.min(max, hyp * max / 55);   // ramps to max over 55 SVG-units
+      const dist  = Math.min(max, hyp * max / 60);
       const angle = Math.atan2(dy, dx);
-      return { x: eyeX + Math.cos(angle) * dist,
-               y: eyeY + Math.sin(angle) * dist };
+      return { 
+        x: eyeX + Math.cos(angle) * dist,
+        y: eyeY + Math.sin(angle) * dist 
+      };
     }
 
     let eyesActive = true;
 
     document.addEventListener('mousemove', function (e) {
       if (!eyesActive) return;
+      
       const rect   = svg.getBoundingClientRect();
-      const scaleX = 280 / rect.width;
-      const scaleY = 310 / rect.height;
-      const mx     = (e.clientX - rect.left) * scaleX;
-      const my     = (e.clientY - rect.top)  * scaleY;
+      const scaleX = 300 / rect.width;   // Updated viewBox width
+      const scaleY = 350 / rect.height;  // Updated viewBox height
+      const mx = (e.clientX - rect.left) * scaleX;
+      const my = (e.clientY - rect.top) * scaleY;
 
-      const lP = calcOffset(L.x, L.y, mx, my, MAX_PUPIL);
-      const rP = calcOffset(R.x, R.y, mx, my, MAX_PUPIL);
-      const lI = calcOffset(L.x, L.y, mx, my, MAX_IRIS);
-      const rI = calcOffset(R.x, R.y, mx, my, MAX_IRIS);
+      // Head group center in viewBox = (145, 140)
+      const headCenterX = 145;
+      const headCenterY = 140;
 
-      lPupil.setAttribute('cx', lP.x); lPupil.setAttribute('cy', lP.y);
-      rPupil.setAttribute('cx', rP.x); rPupil.setAttribute('cy', rP.y);
-      lIris.setAttribute('cx', lI.x);  lIris.setAttribute('cy', lI.y);
-      rIris.setAttribute('cx', rI.x);  rIris.setAttribute('cy', rI.y);
+      // Eye tracking with new coordinates
+      const lP = calcOffset(L.x, L.y, mx - headCenterX, my - headCenterY, MAX_PUPIL);
+      const rP = calcOffset(R.x, R.y, mx - headCenterX, my - headCenterY, MAX_PUPIL);
+      const lI = calcOffset(L.x, L.y, mx - headCenterX, my - headCenterY, MAX_IRIS);
+      const rI = calcOffset(R.x, R.y, mx - headCenterX, my - headCenterY, MAX_IRIS);
+
+      lPupil.setAttribute('cx', lP.x);
+      lPupil.setAttribute('cy', lP.y);
+      rPupil.setAttribute('cx', rP.x);
+      rPupil.setAttribute('cy', rP.y);
+      lIris.setAttribute('cx', lI.x);
+      lIris.setAttribute('cy', lI.y);
+      rIris.setAttribute('cx', rI.x);
+      rIris.setAttribute('cy', rI.y);
+
+      // ── HEAD ROTATION ──
+      // Calculate angle from otter center to cursor
+      const dx = mx - headCenterX;
+      const dy = my - headCenterY;
+      const angle = Math.atan2(dy, dx); // in radians
+      
+      // Clamp rotation to ±25 degrees for natural look
+      const maxHeadRotation = 25;
+      let headRotation = (angle * 180 / Math.PI);
+      headRotation = Math.max(-maxHeadRotation, Math.min(maxHeadRotation, headRotation));
+      
+      headGroup.setAttribute('transform', `translate(145, 140) rotate(${headRotation})`);
+
+      // ── BODY TILT ──
+      // Slight shoulder/body lean following the head movement
+      const bodyTilt = headRotation * 0.35; // less aggressive than head
+      bodyTiltGroup.style.transform = `rotate(${bodyTilt}deg)`;
+      bodyTiltGroup.style.transformOrigin = '50% 50%';
     });
 
     /* ── No Button Escape ── */
@@ -315,7 +384,6 @@
 
     function launchNoBtn() {
       if (!noBtnReady) {
-        // Teleport to fixed coords matching current layout position first
         const r = noBtn.getBoundingClientRect();
         noBtn.style.position = 'fixed';
         noBtn.style.margin   = '0';
@@ -335,16 +403,15 @@
 
     noBtn.addEventListener('mousemove',  launchNoBtn);
     noBtn.addEventListener('touchstart', launchNoBtn, { passive: true });
-    noBtn.addEventListener('click',      launchNoBtn); // just in case
+    noBtn.addEventListener('click',      launchNoBtn);
 
     /* ── Yes Button ── */
     document.getElementById('yes-btn').addEventListener('click', function () {
-      // Stop eye tracking
       eyesActive = false;
 
-      // Happy mouth (big smile)
+      // Happy mouth
       document.getElementById('mouth')
-              .setAttribute('d', 'M 118 198 Q 140 220 162 198');
+              .setAttribute('d', 'M -18 38 Q 0 58 18 38');
 
       // Swap to happy squinty eyes
       lPupil.setAttribute('visibility', 'hidden');
@@ -353,6 +420,10 @@
       rIris.setAttribute('visibility', 'hidden');
       document.getElementById('l-happy-eye').setAttribute('visibility', 'visible');
       document.getElementById('r-happy-eye').setAttribute('visibility', 'visible');
+
+      // Reset head rotation to neutral
+      headGroup.setAttribute('transform', 'translate(145, 140) rotate(0)');
+      bodyTiltGroup.style.transform = 'rotate(0deg)';
 
       // Update sign
       document.getElementById('sign-txt').textContent = 'Thank you! 💖';
