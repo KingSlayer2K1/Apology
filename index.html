@@ -3,153 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birthday Gift Quest</title>
+  <title>Birthday Gift Quest 🎀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-1: #fff7fb;
       --bg-2: #ffeaf3;
       --bg-3: #fffdf7;
-      --ink: #41313b;
+      --ink: #3a2832;
       --ink-soft: #6f5a66;
-      --card: #ffffffcc;
-      --accent: #ff7bac;
+      --card: rgba(255,255,255,0.88);
+      --accent: #f0608a;
       --accent-2: #ffc1d8;
       --accent-3: #ffd8a8;
       --ok: #6bbf8f;
-      --shadow: 0 14px 34px rgba(116, 62, 90, 0.18);
-      --radius: 20px;
+      --shadow: 0 20px 60px rgba(116, 62, 90, 0.15);
+      --radius: 24px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      margin: 0;
-      height: 100%;
-      font-family: "Trebuchet MS", "Segoe UI", "Geneva", sans-serif;
+      min-height: 100%;
+      font-family: 'DM Sans', sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at 12% 18%, #ffd9e9 0%, transparent 28%),
-        radial-gradient(circle at 86% 24%, #ffe8bc 0%, transparent 24%),
-        radial-gradient(circle at 22% 88%, #ffd3dd 0%, transparent 26%),
-        linear-gradient(140deg, var(--bg-1), var(--bg-2) 48%, var(--bg-3));
+        radial-gradient(ellipse at 10% 15%, #ffd9e9 0%, transparent 35%),
+        radial-gradient(ellipse at 88% 20%, #ffe8bc 0%, transparent 28%),
+        radial-gradient(ellipse at 20% 90%, #ffd3dd 0%, transparent 30%),
+        radial-gradient(ellipse at 75% 85%, #e8d9ff 0%, transparent 25%),
+        linear-gradient(150deg, #fff7fb, #ffeaf3 50%, #fffdf7);
       overflow-x: hidden;
     }
 
-    .glow {
+    /* Floating hearts background */
+    .hearts-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 50% 85%, rgba(255, 255, 255, 0.8), transparent 45%);
-      z-index: -1;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hearts-bg span {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: floatHeart linear infinite;
+    }
+    @keyframes floatHeart {
+      0%   { opacity: 0; transform: translateY(0) scale(0.6) rotate(-15deg); }
+      10%  { opacity: 0.25; }
+      90%  { opacity: 0.15; }
+      100% { opacity: 0; transform: translateY(-110vh) scale(1.1) rotate(25deg); }
     }
 
     .shell {
       min-height: 100dvh;
       display: grid;
       place-items: center;
-      padding-top: max(20px, env(safe-area-inset-top));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
-      padding-left: max(16px, env(safe-area-inset-left));
+      padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+      position: relative;
+      z-index: 1;
     }
 
     .panel {
-      width: min(850px, 95vw);
+      width: min(860px, 95vw);
       background: var(--card);
-      backdrop-filter: blur(4px);
-      border: 1px solid #ffffff;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255,255,255,0.9);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: clamp(18px, 3vw, 34px);
+      padding: clamp(20px, 4vw, 42px);
       position: relative;
       overflow: hidden;
-      animation: rise 600ms ease;
+      animation: rise 500ms cubic-bezier(0.34, 1.2, 0.64, 1);
     }
 
     .panel::before {
       content: "";
       position: absolute;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, rgba(255, 193, 216, 0.34), transparent 70%);
-      top: -80px;
-      right: -70px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(255, 193, 216, 0.3), transparent 70%);
+      top: -120px; right: -100px;
       pointer-events: none;
     }
 
-    .title {
-      margin: 0;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      letter-spacing: 0.02em;
+    /* ── TYPOGRAPHY ── */
+    .display {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.1;
       text-align: center;
+      color: var(--ink);
+    }
+    .display em {
+      font-style: italic;
+      color: var(--accent);
     }
 
     .subtitle {
-      margin-top: 10px;
+      margin-top: 12px;
       color: var(--ink-soft);
       text-align: center;
-      font-size: 1.02rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      font-weight: 300;
     }
+    .sweet { color: var(--accent); font-weight: 600; }
 
-    .sweet {
-      color: var(--accent);
-      font-weight: 700;
+    /* ── NAME INPUT ── */
+    .name-wrap {
+      margin-top: 20px;
+      display: grid;
+      gap: 8px;
     }
-
-    label {
-      font-size: 0.95rem;
+    .name-wrap label {
+      text-align: center;
       color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-
-    input, textarea {
-      width: 100%;
-      border: 1px solid #f5bfd4;
+    .name-input-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    input[type="text"], textarea {
+      border: 1.5px solid #f5bfd4;
       border-radius: 14px;
-      padding: 12px 14px;
+      padding: 12px 18px;
       font: inherit;
       font-size: 16px;
       color: var(--ink);
-      background: #fffdfef0;
+      background: rgba(255,255,255,0.8);
       outline: none;
-      transition: border-color 180ms ease, box-shadow 180ms ease;
+      transition: border-color 200ms, box-shadow 200ms;
     }
-
+    input[type="text"] { max-width: 280px; width: 100%; text-align: center; }
     input:focus, textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(255, 123, 172, 0.16);
+      box-shadow: 0 0 0 4px rgba(240, 96, 138, 0.14);
     }
+    textarea { width: 100%; resize: vertical; }
 
+    /* ── BUTTONS ── */
     .btn {
       border: 0;
       border-radius: 999px;
-      padding: 12px 20px;
+      padding: 13px 28px;
       font: inherit;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       touch-action: manipulation;
-      transition: transform 160ms ease, filter 160ms ease;
+      transition: transform 160ms, filter 160ms, box-shadow 160ms;
     }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.03);
-    }
-
-    .btn:active {
-      transform: translateY(1px);
-    }
-
+    .btn:hover  { transform: translateY(-2px); filter: brightness(1.04); }
+    .btn:active { transform: translateY(1px); }
     .btn-main {
       background: linear-gradient(120deg, var(--accent), #ff9cc2);
       color: white;
+      box-shadow: 0 8px 20px rgba(240, 96, 138, 0.35);
     }
-
+    .btn-main:hover { box-shadow: 0 12px 28px rgba(240, 96, 138, 0.45); }
     .btn-soft {
       background: white;
-      border: 1px solid #efc4d6;
+      border: 1.5px solid #efc4d6;
       color: var(--ink);
     }
 
@@ -158,272 +182,336 @@
       justify-content: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    .progress {
-      text-align: center;
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      margin-bottom: 16px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
       color: var(--ink-soft);
-      font-size: 0.95rem;
-      margin: 8px 0 4px;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .progress-bar-bg {
+      height: 6px;
+      background: rgba(240, 96, 138, 0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #ffb0cf);
+      border-radius: 99px;
+      transition: width 400ms cubic-bezier(0.34, 1.2, 0.64, 1);
     }
 
+    /* ── QUESTION ── */
     .question {
+      font-family: 'Playfair Display', serif;
       text-align: center;
-      font-size: clamp(1.3rem, 3.5vw, 1.9rem);
-      margin: 10px 0 22px;
+      font-size: clamp(1.3rem, 3.8vw, 2rem);
+      margin: 14px 0 24px;
       line-height: 1.3;
+      color: var(--ink);
     }
 
+    /* ── CHOICES ── */
     .choices {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
 
     .choice {
-      border: 1px solid #f3cad9;
-      border-radius: 18px;
-      padding: 16px;
-      background: #fff;
-      box-shadow: 0 5px 14px rgba(148, 102, 124, 0.08);
+      border: 1.5px solid #f3cad9;
+      border-radius: 20px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 6px 16px rgba(148, 102, 124, 0.08);
       cursor: pointer;
       touch-action: manipulation;
       text-align: left;
-      transition: transform 190ms ease, box-shadow 190ms ease, border-color 190ms ease;
+      transition: transform 200ms cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 200ms, border-color 200ms, background 200ms;
+      position: relative;
+      overflow: hidden;
     }
-
+    .choice::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(240, 96, 138, 0.1), transparent 70%);
+      opacity: 0;
+      transition: opacity 200ms;
+    }
     .choice:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px) scale(1.01);
       border-color: var(--accent);
-      box-shadow: 0 10px 22px rgba(159, 89, 125, 0.17);
+      box-shadow: 0 14px 28px rgba(159, 89, 125, 0.18);
+    }
+    .choice:hover::after { opacity: 1; }
+    .choice.selected {
+      border-color: var(--accent);
+      background: #fff5f9;
+      transform: scale(0.97);
     }
 
+    .choice-emoji {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
     .choice h3 {
       margin: 0 0 6px;
       font-size: 1.12rem;
+      font-weight: 600;
     }
-
     .choice p {
       margin: 0;
       color: var(--ink-soft);
-      font-size: 0.95rem;
-      line-height: 1.35;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      font-weight: 300;
     }
 
+    /* ── WHEEL ── */
     .wheel-wrap {
       display: grid;
       place-items: center;
-      gap: 12px;
-      margin-top: 12px;
+      gap: 14px;
+      margin-top: 14px;
     }
-
     .wheel-stage {
       position: relative;
-      width: min(290px, 72vw);
+      width: min(300px, 75vw);
       aspect-ratio: 1;
     }
-
     .wheel-pointer {
       position: absolute;
-      top: -8px;
-      left: 50%;
+      top: -10px; left: 50%;
       transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 14px solid transparent;
-      border-right: 14px solid transparent;
-      border-top: 26px solid #ff668f;
-      filter: drop-shadow(0 4px 3px rgba(122, 62, 90, 0.25));
+      width: 0; height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 28px solid var(--accent);
+      filter: drop-shadow(0 4px 6px rgba(122, 62, 90, 0.3));
       z-index: 2;
     }
-
     .wheel {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       border-radius: 50%;
-      border: 7px solid #fff;
-      box-shadow: 0 12px 24px rgba(122, 62, 90, 0.2);
-      background:
-        conic-gradient(
-          #ffd8e8 0deg 90deg,
-          #ffe9bf 90deg 180deg,
-          #ffd8d8 180deg 270deg,
-          #ffe7f3 270deg 360deg
-        );
+      border: 8px solid white;
+      box-shadow: 0 14px 30px rgba(122, 62, 90, 0.22);
+      background: conic-gradient(
+        #ffd0e5 0deg 90deg,
+        #ffe5b8 90deg 180deg,
+        #ffd0d0 180deg 270deg,
+        #e8d5ff 270deg 360deg
+      );
       position: relative;
-      transition: transform 3.2s cubic-bezier(0.17, 0.76, 0.11, 0.99);
+      transition: transform 3.4s cubic-bezier(0.17, 0.76, 0.11, 0.99);
     }
-
     .wheel::after {
-      content: "Love";
+      content: "✨";
       position: absolute;
-      inset: 38%;
+      inset: 36%;
       border-radius: 50%;
-      background: #fff9fd;
+      background: white;
       display: grid;
       place-items: center;
-      font-weight: 800;
-      color: #cd5f88;
-      border: 2px solid #ffd4e5;
+      font-size: 1.4rem;
+      border: 3px solid #ffd4e5;
+    }
+    .wheel-labels {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
     }
 
+    /* ── RESULT CARD ── */
     .result-card {
-      margin-top: 18px;
-      border-radius: 18px;
-      border: 1px solid #f4cddc;
-      background: #fff;
-      padding: 16px;
-      box-shadow: 0 8px 16px rgba(149, 96, 119, 0.1);
+      margin-top: 20px;
+      border-radius: 20px;
+      border: 1.5px solid #f4cddc;
+      background: linear-gradient(135deg, #fff5f9, #fff9f0);
+      padding: 20px 22px;
+      box-shadow: 0 8px 20px rgba(149, 96, 119, 0.1);
+      animation: rise 400ms ease;
     }
-
     .result-card h3 {
-      margin: 0 0 6px;
-      color: #c4547f;
-      font-size: 1.25rem;
+      margin: 0 0 8px;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+      font-size: 1.4rem;
     }
-
     .result-card p {
       margin: 0;
       color: var(--ink-soft);
-      line-height: 1.45;
+      line-height: 1.55;
+      font-weight: 300;
     }
 
+    /* ── WISH BOX ── */
     .wish-box {
-      margin-top: 18px;
+      margin-top: 20px;
       display: grid;
       gap: 10px;
     }
-
-    .small-note {
-      text-align: center;
-      margin-top: 14px;
-      color: #7f6470;
+    .wish-box label {
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 500;
     }
 
+    /* ── THANK YOU VIEW ── */
+    #thankYouView {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .big-heart {
+      font-size: 5rem;
+      display: block;
+      animation: heartbeat 1.2s ease infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .thank-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .thank-subtitle {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── STATUS / NOTES ── */
+    .delivery-note {
+      font-size: 0.82rem;
+      text-align: center;
+      color: #9b7585;
+      background: #fff5f8;
+      border: 1px solid #f3cad9;
+      border-radius: 10px;
+      padding: 8px 14px;
+      margin-top: 6px;
+    }
+
+    /* ── FOOTER ── */
     .footer-love {
       text-align: center;
-      margin-top: 20px;
-      font-size: 1rem;
+      margin-top: 24px;
+      font-size: 0.92rem;
       color: #a64a70;
+      font-style: italic;
     }
 
+    /* ── TOAST ── */
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 20px;
+      bottom: 24px;
       transform: translateX(-50%);
-      background: #fff;
-      border: 1px solid #edbfd1;
+      background: white;
+      border: 1.5px solid #edbfd1;
       border-radius: 999px;
-      padding: 9px 16px;
+      padding: 10px 22px;
       box-shadow: var(--shadow);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 250ms ease, transform 250ms ease;
+      transition: opacity 250ms, transform 250ms;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      z-index: 9999;
     }
+    .toast.show { opacity: 1; transform: translate(-50%, -8px); }
 
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, -8px);
-    }
-
+    /* ── CONFETTI ── */
     .confetti {
       position: fixed;
       top: -10px;
-      width: 8px;
-      height: 14px;
-      opacity: 0.95;
+      width: 9px; height: 15px;
+      opacity: 0.9;
       z-index: 9999;
-      animation: fall 1400ms linear forwards;
+      animation: fall 1500ms linear forwards;
       pointer-events: none;
+      border-radius: 2px;
     }
-
     @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(660deg);
-        opacity: 0.3;
-      }
+      to { transform: translateY(110vh) rotate(720deg); opacity: 0.2; }
     }
 
-    @media (max-width: 740px) {
-      .choices {
-        grid-template-columns: 1fr;
-      }
-      .panel {
-        padding: 16px;
-      }
-      .center .btn {
-        width: min(100%, 360px);
-      }
-      .question {
-        margin-bottom: 14px;
-      }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .choices { grid-template-columns: 1fr; }
+      .panel { padding: 18px; }
+      .center .btn { width: min(100%, 340px); }
     }
-
-    @media (max-width: 460px) {
-      .panel {
-        border-radius: 16px;
-      }
-      .title {
-        font-size: 1.6rem;
-      }
-      .subtitle {
-        font-size: 0.95rem;
-      }
-      .wheel-stage {
-        width: min(255px, 84vw);
-      }
-      .choice {
-        padding: 14px;
-      }
+    @media (max-width: 420px) {
+      .panel { border-radius: 18px; }
+      .display { font-size: 1.7rem; }
     }
-
     @media (hover: none) {
-      .choice:hover {
-        transform: none;
-        border-color: #f3cad9;
-        box-shadow: 0 5px 14px rgba(148, 102, 124, 0.08);
-      }
-      .btn:hover {
-        transform: none;
-        filter: none;
-      }
+      .choice:hover { transform: none; border-color: #f3cad9; box-shadow: 0 6px 16px rgba(148, 102, 124, 0.08); }
+      .btn:hover { transform: none; filter: none; box-shadow: 0 8px 20px rgba(240, 96, 138, 0.35); }
     }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
+
+  <!-- Floating hearts -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
   <main class="shell">
     <section class="panel">
+
+      <!-- ── INTRO ── -->
       <div id="introView">
-        <h1 class="title">Birthday Gift Quest</h1>
+        <h1 class="display">Birthday <em>Gift Quest</em> 🎀</h1>
         <p class="subtitle">
-          This tiny birthday game is made only for you.<br />
-          Whatever you pick, I promise it comes with <span class="sweet">real effort and real love</span>.
+          A tiny birthday game made only for you.<br />
+          Whatever you pick, it comes with <span class="sweet">real effort and real love</span>.
         </p>
+        <div class="name-wrap">
+          <label for="nameInput">What's your name, birthday girl?</label>
+          <div class="name-input-row">
+            <input type="text" id="nameInput" placeholder="Type your name here..." maxlength="30" autocomplete="off" />
+          </div>
+        </div>
         <div class="center">
-          <button id="startBtn" class="btn btn-main">Start The Fun</button>
+          <button id="startBtn" class="btn btn-main">Start The Fun ✨</button>
         </div>
       </div>
 
+      <!-- ── GAME ── -->
       <div id="gameView" class="hidden">
-        <p id="progressText" class="progress"></p>
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progressText">Round 1 of 4</span>
+            <span id="progressPct">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="progressFill" class="progress-bar-fill" style="width:0%"></div>
+          </div>
+        </div>
         <h2 id="questionText" class="question"></h2>
         <div class="choices">
           <button id="choiceA" class="choice" type="button"></button>
@@ -431,8 +519,9 @@
         </div>
       </div>
 
+      <!-- ── REVEAL / WHEEL ── -->
       <div id="revealView" class="hidden">
-        <h2 class="title" style="font-size: clamp(1.6rem, 3.8vw, 2.2rem);">Wheel Of Love</h2>
+        <h2 class="display" style="font-size:clamp(1.5rem,3.8vw,2.1rem);">Wheel of <em>Love</em> 💫</h2>
         <p class="subtitle">Spin this and let fate reveal your birthday vibe.</p>
         <div class="wheel-wrap">
           <div class="wheel-stage">
@@ -440,7 +529,7 @@
             <div id="wheel" class="wheel"></div>
           </div>
           <div class="center">
-            <button id="spinBtn" class="btn btn-main">Spin The Wheel</button>
+            <button id="spinBtn" class="btn btn-main">Spin The Wheel 🌸</button>
           </div>
         </div>
 
@@ -450,379 +539,359 @@
         </div>
 
         <div id="wishSection" class="wish-box hidden">
-          <label for="wishInput">Or tell me the gift you truly want (anything at all)</label>
-          <textarea id="wishInput" rows="4" placeholder="Your wish here..."></textarea>
+          <label for="wishInput">Or tell me exactly what you want — no hints, no secrets 💌</label>
+          <textarea id="wishInput" rows="4" placeholder="Your wish here... I'm listening 🌸"></textarea>
           <div class="center">
-            <button id="submitBtn" class="btn btn-main">Send My Wish</button>
-            <button id="skipBtn" class="btn btn-soft">Skip For Now</button>
+            <button id="submitBtn" class="btn btn-main">Send My Wish 💝</button>
+            <button id="skipBtn" class="btn btn-soft">I'll Keep It a Secret</button>
           </div>
-          <p class="small-note">No pressure. Your smile already wins.</p>
-          <p id="deliveryNote" class="small-note hidden"></p>
+          <div id="deliveryNote" class="delivery-note hidden"></div>
         </div>
-        <p class="footer-love">
-          No matter what you choose, the best part is making you feel loved.
-        </p>
+
+        <p class="footer-love">No matter what you choose, the best part is making you feel loved. 🥺</p>
       </div>
+
+      <!-- ── THANK YOU ── -->
+      <div id="thankYouView" class="hidden">
+        <span class="big-heart">💝</span>
+        <h2 class="thank-title">Wish Received!</h2>
+        <p class="thank-subtitle" id="thankMsg">
+          Your wish just flew straight to my heart. I'm already planning something special for you.
+        </p>
+        <p class="footer-love" style="margin-top: 28px;">With all the love in the world 🌹</p>
+      </div>
+
     </section>
   </main>
 
   <div id="toast" class="toast"></div>
 
   <script>
-    const introView = document.getElementById("introView");
-    const gameView = document.getElementById("gameView");
-    const revealView = document.getElementById("revealView");
+    /* ═══════════════════════════════════════════════════
+       OWNER SETUP — only one thing to do:
+       1. Go to https://web3forms.com
+       2. Enter your email and click "Create Access Key"
+       3. Copy the key and paste it below
+       That's it! Responses will be emailed to you.
+    ═══════════════════════════════════════════════════ */
+    const WEB3FORMS_ACCESS_KEY = "57447bbc-a69a-4f0b-b252-34e8296be8ac";
 
-    const startBtn = document.getElementById("startBtn");
-    const progressText = document.getElementById("progressText");
-    const questionText = document.getElementById("questionText");
-    const choiceA = document.getElementById("choiceA");
-    const choiceB = document.getElementById("choiceB");
-    const spinBtn = document.getElementById("spinBtn");
-    const wheel = document.getElementById("wheel");
-    const resultCard = document.getElementById("resultCard");
-    const resultTitle = document.getElementById("resultTitle");
-    const resultDesc = document.getElementById("resultDesc");
-    const wishSection = document.getElementById("wishSection");
-    const wishInput = document.getElementById("wishInput");
-    const submitBtn = document.getElementById("submitBtn");
-    const skipBtn = document.getElementById("skipBtn");
-    const deliveryNote = document.getElementById("deliveryNote");
-    const toast = document.getElementById("toast");
-
-    /*
-      Owner setup:
-      Replace formAction + entry.* fields below with your Google Form values.
-      See OWNER_SETUP.md for exact steps.
-    */
-    const ONLINE_RESPONSE_CONFIG = {
-      googleForm: {
-        formAction: "PASTE_GOOGLE_FORM_ACTION_URL_HERE",
-        fields: {
-          submittedAt: "entry.1111111111",
-          picksJson: "entry.2222222222",
-          suggestedGift: "entry.3333333333",
-          suggestedDescription: "entry.4444444444",
-          finalWish: "entry.5555555555",
-          skippedWishInput: "entry.6666666666",
-          starterPlanJson: "entry.7777777777"
-        }
-      }
-    };
-
+    /* ─ local backup key ─ */
     const LOCAL_BACKUP_KEY = "birthday_gift_quest_responses_v1";
 
+    /* ─ DOM refs ─ */
+    const introView   = document.getElementById("introView");
+    const gameView    = document.getElementById("gameView");
+    const revealView  = document.getElementById("revealView");
+    const thankYouView= document.getElementById("thankYouView");
+    const nameInput   = document.getElementById("nameInput");
+    const startBtn    = document.getElementById("startBtn");
+    const progressText= document.getElementById("progressText");
+    const progressPct = document.getElementById("progressPct");
+    const progressFill= document.getElementById("progressFill");
+    const questionText= document.getElementById("questionText");
+    const choiceA     = document.getElementById("choiceA");
+    const choiceB     = document.getElementById("choiceB");
+    const spinBtn     = document.getElementById("spinBtn");
+    const wheel       = document.getElementById("wheel");
+    const resultCard  = document.getElementById("resultCard");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultDesc  = document.getElementById("resultDesc");
+    const wishSection = document.getElementById("wishSection");
+    const wishInput   = document.getElementById("wishInput");
+    const submitBtn   = document.getElementById("submitBtn");
+    const skipBtn     = document.getElementById("skipBtn");
+    const deliveryNote= document.getElementById("deliveryNote");
+    const toast       = document.getElementById("toast");
+    const thankMsg    = document.getElementById("thankMsg");
+
+    /* ─ Floating hearts ─ */
+    (function spawnHearts() {
+      const emojis = ["🌸", "💗", "✨", "🌷", "💕", "🫶", "🩷"];
+      const bg = document.getElementById("heartsBg");
+      for (let i = 0; i < 14; i++) {
+        const s = document.createElement("span");
+        s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.bottom = "-10vh";
+        s.style.animationDuration = (12 + Math.random() * 18) + "s";
+        s.style.animationDelay   = (Math.random() * 20) + "s";
+        s.style.fontSize = (0.8 + Math.random() * 1) + "rem";
+        bg.appendChild(s);
+      }
+    })();
+
+    /* ─ Toast ─ */
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    /* ─ Rounds ─ */
     const rounds = [
       {
-        prompt: "Pick your birthday mood first:",
-        a: {
-          id: "cozy",
-          title: "Cozy Date",
-          desc: "Blanket fort, fairy lights, warm drinks, endless cuddles."
-        },
-        b: {
-          id: "adventure",
-          title: "Adventure Day",
-          desc: "Mini road trip, new place, spontaneous fun together."
-        }
+        prompt: "Pick your birthday mood 🎂",
+        a: { id: "cozy",      emoji: "🛋️", title: "Cozy Date",      desc: "Blanket fort, fairy lights, warm drinks, endless cuddles." },
+        b: { id: "adventure", emoji: "🗺️", title: "Adventure Day",  desc: "Mini road trip, new place, spontaneous fun together." }
       },
       {
-        prompt: "Which surprise sounds cuter?",
-        a: {
-          id: "handmade",
-          title: "Handmade Surprise",
-          desc: "A crafted gift with tiny details and heartfelt effort."
-        },
-        b: {
-          id: "mystery",
-          title: "Mystery Box",
-          desc: "Unbox clues, little treats, and one final big reveal."
-        }
+        prompt: "Which surprise sounds cuter? 🎁",
+        a: { id: "handmade", emoji: "🎨", title: "Handmade Surprise", desc: "A crafted gift with tiny details and heartfelt effort." },
+        b: { id: "mystery",  emoji: "🎀", title: "Mystery Box",       desc: "Unbox clues, little treats, and one final big reveal." }
       },
       {
-        prompt: "Final vibe check:",
-        a: {
-          id: "memory",
-          title: "Memory Gift",
-          desc: "Polaroids, notes, and moments that last forever."
-        },
-        b: {
-          id: "experience",
-          title: "Experience Gift",
-          desc: "A class, event, or activity we can enjoy together."
-        }
+        prompt: "Final vibe check ✨",
+        a: { id: "memory",     emoji: "📸", title: "Memory Gift",      desc: "Polaroids, notes, and moments that last forever." },
+        b: { id: "experience", emoji: "🎡", title: "Experience Gift",   desc: "A class, event, or activity we can enjoy together." }
+      },
+      {
+        prompt: "One last thing… 💭",
+        a: { id: "personal",   emoji: "💌", title: "Super Personal",   desc: "Deeply thoughtful — only someone who knows me well could give it." },
+        b: { id: "practical",  emoji: "🛍️", title: "Useful & Lovely",  desc: "Something beautiful that I'll actually use every day." }
       }
     ];
 
     const suggestions = {
       sentimental: {
         title: "Love Archive Date",
-        desc: "A custom memory box + handwritten letter + dreamy photo picnic. Soft, emotional, and full of meaning."
+        desc:  "A custom memory box + handwritten letter + dreamy photo picnic. Soft, emotional, and full of meaning."
       },
       playful: {
         title: "Mystery Quest Night",
-        desc: "A clue-based mini game where every clue unlocks a tiny treat, ending in her real gift wish."
+        desc:  "A clue-based mini game where every clue unlocks a tiny treat, ending in your real gift reveal."
       },
       experience: {
         title: "Adventure + Keepsake Combo",
-        desc: "A surprise outing together and one keepsake from the day so she keeps the memory forever."
+        desc:  "A surprise outing together and one keepsake from the day so you keep the memory forever."
       },
       balanced: {
         title: "Princess Choice Bundle",
-        desc: "One thoughtful handmade piece, one fun shared activity, and one sweet personal note from you."
+        desc:  "One thoughtful handmade piece, one fun shared activity, and one sweet personal note."
       }
     };
 
     const actionGuides = {
-      cozy: [
-        "Set up a blanket corner with fairy lights.",
-        "Keep two comfort snacks and one warm drink ready.",
-        "Add one handwritten note under the pillow."
-      ],
-      adventure: [
-        "Pick one nearby place under 60-90 mins travel.",
-        "Pack water, snacks, mini speaker, and power bank.",
-        "Add one surprise stop (cafe/view point/book store)."
-      ],
-      handmade: [
-        "Write 5 short reasons you love her on mini cards.",
-        "Create one simple craft (photo frame/scrap card).",
-        "Wrap it with one tiny flower or ribbon."
-      ],
-      mystery: [
-        "Prepare 3 clues and hide them in easy safe spots.",
-        "Add one tiny reward at each clue (chocolate, note, photo).",
-        "Final clue leads to the real gift or wish reveal."
-      ],
-      memory: [
-        "Print or collect 6-10 favorite photos.",
-        "Write one memory line under each photo.",
-        "Bind into a mini memory booklet."
-      ],
-      experience: [
-        "Pick one activity she likes (pottery, movie, brunch, arcade).",
-        "Pre-book tickets or table to avoid waiting.",
-        "End with one keepsake photo + message note."
-      ]
+      cozy:       ["Set up a blanket corner with fairy lights.", "Keep two comfort snacks and one warm drink ready.", "Add one handwritten note under the pillow."],
+      adventure:  ["Pick one nearby place under 60–90 mins travel.", "Pack water, snacks, mini speaker, and power bank.", "Add one surprise stop (café / view point / book store)."],
+      handmade:   ["Write 5 short reasons you love her on mini cards.", "Create one simple craft (photo frame / scrap card).", "Wrap it with one tiny flower or ribbon."],
+      mystery:    ["Prepare 3 clues and hide them in easy safe spots.", "Add one tiny reward at each clue (chocolate, note, photo).", "Final clue leads to the real gift or wish reveal."],
+      memory:     ["Print or collect 6–10 favourite photos.", "Write one memory line under each photo.", "Bind into a mini memory booklet."],
+      experience: ["Pick one activity she likes (pottery, movie, brunch, arcade).", "Pre-book tickets or table to avoid waiting.", "End with one keepsake photo + message note."],
+      personal:   ["Think of 3 things only you know about her.", "Turn one into a physical keepsake or experience.", "Add a handwritten note explaining why you chose it."],
+      practical:  ["Ask her favourite colour / brand if unsure.", "Choose something she mentioned wanting but never bought herself.", "Wrap it beautifully — presentation matters as much as the gift."]
     };
 
     let currentRound = 0;
     let picks = [];
     let finalSuggestion = suggestions.balanced;
+    let gfName = "";
 
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2200);
-    }
-
-    function hasOnlineResponseConfig() {
-      const cfg = ONLINE_RESPONSE_CONFIG.googleForm;
-      if (!cfg || !cfg.formAction || cfg.formAction.includes("PASTE_")) {
-        return false;
-      }
-      const values = Object.values(cfg.fields || {});
-      return values.length > 0 && values.every((v) => typeof v === "string" && v.startsWith("entry."));
-    }
-
-    function saveLocalBackup(payload) {
-      const existingRaw = localStorage.getItem(LOCAL_BACKUP_KEY);
-      let existing = [];
-      if (existingRaw) {
-        try {
-          const parsed = JSON.parse(existingRaw);
-          if (Array.isArray(parsed)) {
-            existing = parsed;
-          }
-        } catch (err) {
-          existing = [];
-        }
-      }
-      existing.push(payload);
-      localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(existing));
-    }
-
-    function buildGoogleFormParams(payload) {
-      const fieldMap = ONLINE_RESPONSE_CONFIG.googleForm.fields;
-      const params = new URLSearchParams();
-      params.append(fieldMap.submittedAt, payload.submittedAt);
-      params.append(fieldMap.picksJson, JSON.stringify(payload.picks));
-      params.append(fieldMap.suggestedGift, payload.suggestedGift);
-      params.append(fieldMap.suggestedDescription, payload.suggestedDescription);
-      params.append(fieldMap.finalWish, payload.finalWish || "");
-      params.append(fieldMap.skippedWishInput, String(payload.skippedWishInput));
-      params.append(fieldMap.starterPlanJson, JSON.stringify(payload.starterPlan));
-      return params;
-    }
-
-    async function sendToGoogleForm(payload) {
-      if (!hasOnlineResponseConfig()) {
-        return { ok: false, reason: "not_configured" };
-      }
-
-      const formAction = ONLINE_RESPONSE_CONFIG.googleForm.formAction;
-      const body = buildGoogleFormParams(payload);
-
-      try {
-        await fetch(formAction, {
-          method: "POST",
-          mode: "no-cors",
-          body
-        });
-        return { ok: true };
-      } catch (err) {
-        return { ok: false, reason: "network_error" };
-      }
-    }
-
-    function updateRound() {
-      const r = rounds[currentRound];
+    /* ─ Progress bar ─ */
+    function updateProgress() {
+      const pct = Math.round((currentRound / rounds.length) * 100);
+      progressFill.style.width = pct + "%";
+      progressPct.textContent  = pct + "%";
       progressText.textContent = "Round " + (currentRound + 1) + " of " + rounds.length;
-      questionText.textContent = r.prompt;
-      choiceA.innerHTML = "<h3>" + r.a.title + "</h3><p>" + r.a.desc + "</p>";
-      choiceB.innerHTML = "<h3>" + r.b.title + "</h3><p>" + r.b.desc + "</p>";
     }
 
-    function calculateSuggestion() {
-      const ids = picks.map((p) => p.choiceId);
-      const sentimentalScore = ["cozy", "handmade", "memory"].filter((id) => ids.includes(id)).length;
-      const playfulScore = ["mystery", "handmade"].filter((id) => ids.includes(id)).length;
-      const experienceScore = ["adventure", "experience"].filter((id) => ids.includes(id)).length;
+    /* ─ Render round ─ */
+    function updateRound() {
+      updateProgress();
+      const r = rounds[currentRound];
+      questionText.textContent = r.prompt;
+      [choiceA, choiceB].forEach((btn, i) => {
+        const c = i === 0 ? r.a : r.b;
+        btn.innerHTML = `<span class="choice-emoji">${c.emoji}</span><h3>${c.title}</h3><p>${c.desc}</p>`;
+        btn.classList.remove("selected");
+        btn.disabled = false;
+      });
+    }
 
-      if (sentimentalScore >= 2 && experienceScore === 0) {
-        return suggestions.sentimental;
-      }
-      if (experienceScore >= 2) {
-        return suggestions.experience;
-      }
-      if (playfulScore >= 2) {
-        return suggestions.playful;
-      }
+    /* ─ Suggestion logic ─ */
+    function calculateSuggestion() {
+      const ids = picks.map(p => p.choiceId);
+      const sent = ["cozy","handmade","memory","personal"].filter(id => ids.includes(id)).length;
+      const play = ["mystery","handmade"].filter(id => ids.includes(id)).length;
+      const exp  = ["adventure","experience"].filter(id => ids.includes(id)).length;
+      if (sent >= 2 && exp === 0) return suggestions.sentimental;
+      if (exp  >= 2)              return suggestions.experience;
+      if (play >= 2)              return suggestions.playful;
       return suggestions.balanced;
     }
 
+    /* ─ Confetti ─ */
     function launchConfetti() {
-      const colors = ["#ff8fb3", "#ffd984", "#ffb8d2", "#ffffff", "#ff719f"];
-      for (let i = 0; i < 90; i++) {
+      const colors = ["#ff8fb3","#ffd984","#ffb8d2","#ffffff","#ff719f","#cdb0ff"];
+      for (let i = 0; i < 100; i++) {
         const bit = document.createElement("div");
         bit.className = "confetti";
         bit.style.left = Math.random() * 100 + "vw";
         bit.style.background = colors[Math.floor(Math.random() * colors.length)];
         bit.style.transform = "rotate(" + Math.random() * 360 + "deg)";
-        bit.style.animationDelay = Math.random() * 0.35 + "s";
-        bit.style.animationDuration = 1200 + Math.random() * 1200 + "ms";
+        bit.style.animationDelay    = Math.random() * 0.4 + "s";
+        bit.style.animationDuration = 1200 + Math.random() * 1400 + "ms";
         document.body.appendChild(bit);
-        setTimeout(() => bit.remove(), 2800);
+        setTimeout(() => bit.remove(), 3000);
       }
     }
 
+    /* ─ Local backup ─ */
+    function saveLocalBackup(payload) {
+      try {
+        const raw = localStorage.getItem(LOCAL_BACKUP_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        arr.push(payload);
+        localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(arr));
+      } catch(e) {}
+    }
+
+    /* ─ Web3Forms send ─ */
+    async function sendViaWeb3Forms(payload) {
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.includes("PASTE_")) {
+        return { ok: false, reason: "not_configured" };
+      }
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `🎀 Birthday Gift Quest — ${payload.name || "Someone special"} responded!`,
+            from_name: payload.name || "Birthday Girl",
+            name: payload.name || "Birthday Girl",
+            "Submitted At":     payload.submittedAt,
+            "Picks":            JSON.stringify(payload.picks, null, 2),
+            "Suggested Gift":   payload.suggestedGift,
+            "Gift Description": payload.suggestedDescription,
+            "Her Wish":         payload.finalWish || "(skipped)",
+            "Skipped Wish":     String(payload.skippedWishInput),
+            "Starter Plan":     JSON.stringify(payload.starterPlan, null, 2)
+          })
+        });
+        const data = await res.json();
+        return data.success ? { ok: true } : { ok: false, reason: "api_error", detail: data.message };
+      } catch(e) {
+        return { ok: false, reason: "network_error" };
+      }
+    }
+
+    /* ─ Submit ─ */
     async function submitWish(isSkip) {
       submitBtn.disabled = true;
-      skipBtn.disabled = true;
+      skipBtn.disabled   = true;
 
-      const starterPlan = picks.map((pick) => ({
-        choiceId: pick.choiceId,
+      const starterPlan = picks.map(pick => ({
+        choiceId:    pick.choiceId,
         choiceTitle: pick.choiceTitle,
-        steps: actionGuides[pick.choiceId] || []
+        steps:       actionGuides[pick.choiceId] || []
       }));
 
       const payload = {
-        submittedAt: new Date().toISOString(),
+        submittedAt:        new Date().toISOString(),
+        name:               gfName,
         picks,
-        suggestedGift: finalSuggestion.title,
+        suggestedGift:      finalSuggestion.title,
         suggestedDescription: finalSuggestion.desc,
         starterPlan,
-        finalWish: isSkip ? "" : wishInput.value.trim(),
-        skippedWishInput: Boolean(isSkip)
+        finalWish:          isSkip ? "" : wishInput.value.trim(),
+        skippedWishInput:   Boolean(isSkip)
       };
 
       saveLocalBackup(payload);
-      const online = await sendToGoogleForm(payload);
+      const result = await sendViaWeb3Forms(payload);
 
-      if (online.ok) {
+      if (result.ok) {
         launchConfetti();
-        showToast("Wish sent with love!");
-        deliveryNote.classList.add("hidden");
-        wishSection.classList.add("hidden");
-      } else if (online.reason === "not_configured") {
-        showToast("Saved locally. Owner still needs to finish online setup.");
-        deliveryNote.textContent = "Owner note: online response form is not configured yet.";
+        // Show thank you screen
+        revealView.classList.add("hidden");
+        thankYouView.classList.remove("hidden");
+        thankMsg.textContent = gfName
+          ? `${gfName}'s wish just flew straight to his heart. He's already planning something magical for you. 🌹`
+          : "Your wish just flew straight to his heart. He's already planning something magical for you. 🌹";
+        showToast("Wish sent with love! 💌");
+      } else if (result.reason === "not_configured") {
+        deliveryNote.textContent = "⚠️ Owner note: Web3Forms key not set up yet. Your response is saved in this browser.";
         deliveryNote.classList.remove("hidden");
+        showToast("Saved locally — online not set up yet.");
       } else {
-        showToast("Saved locally. Network issue while sending online.");
-        deliveryNote.textContent = "Owner note: response saved in this browser but online send failed.";
+        deliveryNote.textContent = "Network issue — your response was saved in this browser. 💾";
         deliveryNote.classList.remove("hidden");
+        showToast("Saved locally. Will try again later.");
       }
 
       submitBtn.disabled = false;
-      skipBtn.disabled = false;
+      skipBtn.disabled   = false;
     }
 
+    /* ─ Start ─ */
     startBtn.addEventListener("click", () => {
+      gfName = nameInput.value.trim();
       introView.classList.add("hidden");
       gameView.classList.remove("hidden");
       updateRound();
-      showToast("Let the birthday magic begin.");
+      showToast(gfName ? `Let's go, ${gfName}! 🎉` : "Let the birthday magic begin! 🎉");
     });
 
+    /* Allow Enter to start */
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") startBtn.click(); });
+
+    /* ─ Pick choice ─ */
     function pick(which) {
       const r = rounds[currentRound];
       const c = which === "a" ? r.a : r.b;
-      picks.push({
-        round: currentRound + 1,
-        prompt: r.prompt,
-        choiceId: c.id,
-        choiceTitle: c.title
-      });
+      const btn = which === "a" ? choiceA : choiceB;
 
-      currentRound += 1;
-      if (currentRound < rounds.length) {
-        updateRound();
-      } else {
-        finalSuggestion = calculateSuggestion();
-        gameView.classList.add("hidden");
-        revealView.classList.remove("hidden");
-      }
+      btn.classList.add("selected");
+      choiceA.disabled = true;
+      choiceB.disabled = true;
+
+      picks.push({ round: currentRound + 1, prompt: r.prompt, choiceId: c.id, choiceTitle: c.title });
+
+      setTimeout(() => {
+        currentRound++;
+        if (currentRound < rounds.length) {
+          updateRound();
+        } else {
+          // Show progress at 100%
+          progressFill.style.width = "100%";
+          progressPct.textContent  = "100%";
+          finalSuggestion = calculateSuggestion();
+          setTimeout(() => {
+            gameView.classList.add("hidden");
+            revealView.classList.remove("hidden");
+            launchConfetti();
+          }, 300);
+        }
+      }, 380);
     }
 
     choiceA.addEventListener("click", () => pick("a"));
     choiceB.addEventListener("click", () => pick("b"));
 
+    /* ─ Spin ─ */
     let spun = false;
     spinBtn.addEventListener("click", () => {
-      if (spun) {
-        return;
-      }
+      if (spun) return;
       spun = true;
       spinBtn.disabled = true;
 
-      const segments = {
-        sentimental: 315,
-        playful: 45,
-        experience: 135,
-        balanced: 225
-      };
-
-      const key = Object.keys(suggestions).find(
-        (k) => suggestions[k].title === finalSuggestion.title
-      ) || "balanced";
-
-      const baseRotation = 4 * 360;
-      const jitter = Math.floor(Math.random() * 20) - 10;
-      const angle = baseRotation + segments[key] + jitter;
-      wheel.style.transform = "rotate(" + angle + "deg)";
+      const segments = { sentimental: 315, playful: 45, experience: 135, balanced: 225 };
+      const key = Object.keys(suggestions).find(k => suggestions[k].title === finalSuggestion.title) || "balanced";
+      const angle = 4 * 360 + segments[key] + Math.floor(Math.random() * 20) - 10;
+      wheel.style.transform = `rotate(${angle}deg)`;
 
       setTimeout(() => {
         resultTitle.textContent = finalSuggestion.title;
-        resultDesc.textContent = finalSuggestion.desc;
+        resultDesc.textContent  = finalSuggestion.desc;
         resultCard.classList.remove("hidden");
         wishSection.classList.remove("hidden");
         launchConfetti();
-      }, 3200);
+      }, 3400);
     });
 
     submitBtn.addEventListener("click", () => submitWish(false));
-    skipBtn.addEventListener("click", () => submitWish(true));
+    skipBtn.addEventListener("click",   () => submitWish(true));
   </script>
 </body>
 </html>
