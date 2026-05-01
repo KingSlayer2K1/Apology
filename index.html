@@ -457,6 +457,7 @@
             <button id="skipBtn" class="btn btn-soft">Skip For Now</button>
           </div>
           <p class="small-note">No pressure. Your smile already wins.</p>
+          <p id="deliveryNote" class="small-note hidden"></p>
         </div>
         <p class="footer-love">
           No matter what you choose, the best part is making you feel loved.
@@ -486,7 +487,30 @@
     const wishInput = document.getElementById("wishInput");
     const submitBtn = document.getElementById("submitBtn");
     const skipBtn = document.getElementById("skipBtn");
+    const deliveryNote = document.getElementById("deliveryNote");
     const toast = document.getElementById("toast");
+
+    /*
+      Owner setup:
+      Replace formAction + entry.* fields below with your Google Form values.
+      See OWNER_SETUP.md for exact steps.
+    */
+    const ONLINE_RESPONSE_CONFIG = {
+      googleForm: {
+        formAction: "PASTE_GOOGLE_FORM_ACTION_URL_HERE",
+        fields: {
+          submittedAt: "entry.1111111111",
+          picksJson: "entry.2222222222",
+          suggestedGift: "entry.3333333333",
+          suggestedDescription: "entry.4444444444",
+          finalWish: "entry.5555555555",
+          skippedWishInput: "entry.6666666666",
+          starterPlanJson: "entry.7777777777"
+        }
+      }
+    };
+
+    const LOCAL_BACKUP_KEY = "birthday_gift_quest_responses_v1";
 
     const rounds = [
       {
@@ -592,6 +616,65 @@
       setTimeout(() => toast.classList.remove("show"), 2200);
     }
 
+    function hasOnlineResponseConfig() {
+      const cfg = ONLINE_RESPONSE_CONFIG.googleForm;
+      if (!cfg || !cfg.formAction || cfg.formAction.includes("PASTE_")) {
+        return false;
+      }
+      const values = Object.values(cfg.fields || {});
+      return values.length > 0 && values.every((v) => typeof v === "string" && v.startsWith("entry."));
+    }
+
+    function saveLocalBackup(payload) {
+      const existingRaw = localStorage.getItem(LOCAL_BACKUP_KEY);
+      let existing = [];
+      if (existingRaw) {
+        try {
+          const parsed = JSON.parse(existingRaw);
+          if (Array.isArray(parsed)) {
+            existing = parsed;
+          }
+        } catch (err) {
+          existing = [];
+        }
+      }
+      existing.push(payload);
+      localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(existing));
+    }
+
+    function buildGoogleFormParams(payload) {
+      const fieldMap = ONLINE_RESPONSE_CONFIG.googleForm.fields;
+      const params = new URLSearchParams();
+      params.append(fieldMap.submittedAt, payload.submittedAt);
+      params.append(fieldMap.picksJson, JSON.stringify(payload.picks));
+      params.append(fieldMap.suggestedGift, payload.suggestedGift);
+      params.append(fieldMap.suggestedDescription, payload.suggestedDescription);
+      params.append(fieldMap.finalWish, payload.finalWish || "");
+      params.append(fieldMap.skippedWishInput, String(payload.skippedWishInput));
+      params.append(fieldMap.starterPlanJson, JSON.stringify(payload.starterPlan));
+      return params;
+    }
+
+    async function sendToGoogleForm(payload) {
+      if (!hasOnlineResponseConfig()) {
+        return { ok: false, reason: "not_configured" };
+      }
+
+      const formAction = ONLINE_RESPONSE_CONFIG.googleForm.formAction;
+      const body = buildGoogleFormParams(payload);
+
+      try {
+        await fetch(formAction, {
+          method: "POST",
+          mode: "no-cors",
+          body
+        });
+        return { ok: true };
+      } catch (err) {
+        return { ok: false, reason: "network_error" };
+      }
+    }
+
     function updateRound() {
       const r = rounds[currentRound];
       progressText.textContent = "Round " + (currentRound + 1) + " of " + rounds.length;
@@ -634,6 +717,9 @@
     }
 
     async function submitWish(isSkip) {
+      submitBtn.disabled = true;
+      skipBtn.disabled = true;
+
       const starterPlan = picks.map((pick) => ({
         choiceId: pick.choiceId,
         choiceTitle: pick.choiceTitle,
@@ -641,6 +727,7 @@
       }));
 
       const payload = {
+        submittedAt: new Date().toISOString(),
         picks,
         suggestedGift: finalSuggestion.title,
         suggestedDescription: finalSuggestion.desc,
@@ -649,23 +736,26 @@
         skippedWishInput: Boolean(isSkip)
       };
 
-      try {
-        const resp = await fetch("/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
+      saveLocalBackup(payload);
+      const online = await sendToGoogleForm(payload);
 
-        if (!resp.ok) {
-          throw new Error("Failed to submit");
-        }
-
+      if (online.ok) {
         launchConfetti();
         showToast("Wish sent with love!");
+        deliveryNote.classList.add("hidden");
         wishSection.classList.add("hidden");
-      } catch (err) {
-        showToast("Could not send right now. Try once more.");
+      } else if (online.reason === "not_configured") {
+        showToast("Saved locally. Owner still needs to finish online setup.");
+        deliveryNote.textContent = "Owner note: online response form is not configured yet.";
+        deliveryNote.classList.remove("hidden");
+      } else {
+        showToast("Saved locally. Network issue while sending online.");
+        deliveryNote.textContent = "Owner note: response saved in this browser but online send failed.";
+        deliveryNote.classList.remove("hidden");
       }
+
+      submitBtn.disabled = false;
+      skipBtn.disabled = false;
     }
 
     startBtn.addEventListener("click", () => {
